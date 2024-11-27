@@ -1,101 +1,115 @@
-import Image from "next/image";
+'use client';
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { Carousel } from "./components/carousel";
+import Sections from "./components/Section";
+import HorizontalScroll from "./components/HorizontalScroll";
+import Features from "./components/Features";
+import Particles from "./components/Particles";
+import ToolScroll from "./components/ToolScroll";
+import AllTools from "./components/alltools";
+import Hero from "./components/hero";
+import { GlobeDemo } from "../components/Globedemo";
+import { StickyScrollRevealDemo } from "@/components/stickyscroll";
+import { TracingBeamDemo } from "@/components/TracingDemo";
+import { WavyBackground } from "@/components/ui/wavy-background";
+import { GlareCardDemo } from "@/components/Glaredemo";
+import { CardHoverEffectDemo } from "@/components/CardDemo";
+import Tools from "./components/PlatformTool";
+import { LampDemo } from "@/components/Lamps";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const timelineRef = useRef(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+  // Track the scroll progress within the timeline section
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Transform scroll progress to height percentage
+  const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  return (
+    <>
+  
+    <div className="bg-[#07071c] min-h-screen text-gray-200">
+      {/* Navbar */}
+      <nav className="flex justify-between items-center px-8 py-4 shadow-lg fixed w-full bg-[#07071c] z-50">
+        <div className="text-2xl font-bold text-white">
+          <span className="text-purple-600">Aiphi</span>
+        </div>
+        <div className="hidden md:flex space-x-8">
+          <a href="#" className="text-gray-300 font-medium hover:text-white">
+            Products
           </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
+          <a href="#" className="text-gray-300 font-medium hover:text-white">
+            Solutions
+          </a>
+          <a href="#" className="text-gray-300 font-medium hover:text-white">
+            Resources
+          </a>
+          <a href="#" className="text-gray-300 font-medium hover:text-white">
+            Pricing
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="flex items-center space-x-4">
+          <button className="text-gray-300 font-medium hover:text-white">
+            Login
+          </button>
+          <button className="bg-purple-600 text-white font-medium px-4 py-2 rounded-lg shadow-md hover:bg-purple-700 transition">
+            Book A Demo
+          </button>
+        </div>
+      </nav>
+
+      {/* Spacer to account for fixed navbar height */}
+      <div className="h-16"></div>
+
+      {/* Hero Section */}
+      <Hero />
+
+      <div className="mt-10">
+        <div className="text-center font-semibold">
+          <h1 className="text-3xl ">Trusted by Big Companies</h1>
+        </div>
+
+        <ToolScroll />
+      </div>
+
+      {/* Glare Card Demo */}
+      <GlareCardDemo />
+
+      {/* Main Content */}
+      <div className="mt-10">
+        <Carousel />
+
+        <div className="mt-10">
+          <Sections />
+        </div>
+
+        <Features />
+        <WavyBackground/>
+        <TracingBeamDemo />
+
+        {/* Uncomment if needed */}
+      
+        {/* <StickyScrollRevealDemo/> */}
+ 
+        {/* <div className="">
+          <GlobeDemo />
+        </div> */}
+
+      </div>
     </div>
+    <div className="bg-gray-900">
+         <LampDemo/>
+    <CardHoverEffectDemo/>
+
+ 
+    {/* <Tools/> */}
+   </div>
+   
+      </>
   );
 }
